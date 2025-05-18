@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Service
 @Transactional
-public class userServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private userRepository userRepository;
 
@@ -95,16 +95,6 @@ public class userServiceImpl implements UserService {
         user.setPhone(registerDTO.getPhone());
         userRepository.save(user);
     }
-
-//    @Override
-//    public User findByPhone(String phone) {
-//        return null;
-//    }
-////
-//    @Override
-//    public User update(User user) {
-//        return null;
-//    }
 }
 
 

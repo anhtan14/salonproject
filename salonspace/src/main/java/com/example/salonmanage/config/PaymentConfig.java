@@ -19,10 +19,10 @@ public class PaymentConfig {
     public static final String LOCALEDEFAULT = "vn";
     public static final String CARDTYPE = "01";
     // public static final String TXNREF = "VNPAY123";
-    public static final String RETURNURL = "http://171.244.57.109:8080/checkout/payment-information";
-    public static final String CHECKSUM = "LNYDNBPZCOVMSIVTCEJHYLZZKAKTSWHB";
+    public static final String RETURNURL = "http://localhost:8080/checkout/payment-information";
+    public static final String CHECKSUM = "NP4HEV0H5Z9VPUSYITDQQ0NAUQFZW1ED";
     public static final String VNPAYURL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static final String TMNCODE = "ZI6PK569";
+    public static final String TMNCODE = "7G205UWA";
     public static final String IPDEFAULT = "0.0.0.0.0.0.0.1";
     public static final String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
