@@ -65,7 +65,7 @@ function Home() {
                             </div>
                             <div className={cx('about-text')}>
                                 <p>
-                                    Thành lập từ năm 2019, SalonSpace vẫn luôn đứng vững suốt 4 năm trong ngành thẩm mỹ
+                                    Thành lập từ năm 2021, SalonSpace vẫn luôn đứng vững suốt 4 năm trong ngành thẩm mỹ
                                     Việt cạnh tranh khốc liệt và đem đến vẻ đẹp hoàn hảo cho hàng triệu khách hàng.
                                 </p>
                                 <p>
