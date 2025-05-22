@@ -10,38 +10,9 @@ import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import './BookServiceContent.css';
-import staffNghia from '~/assets/images/n.jpg';
-import staffLuong from '~/assets/images/luong.jpg';
-import staffdube from '~/assets/images/dube.jpg';
 
 function BookServiceContent() {
-    const [branches] = useState([
-        {
-            id: 1,
-            address: 'Khu đô thị FPT, Ngũ Hành Sơn, TP Đà Nẵng',
-            position: '15.977456962147246, 108.2627979201717',
-        },
-        {
-            id: 2,
-            address: '123 Phạm Như Xương, Liên Chiểu, TP Đà Nẵng',
-            position: '16.06456047137082, 108.15191449651242',
-        },
-        {
-            id: 3,
-            address: '36 Trần Văn Ơn, TP Huế, Thừa Thiên Huế',
-            position: '16.465680902969627, 107.60516250808173',
-        },
-        {
-            id: 4,
-            address: '150 Trần Thánh Tông, Hội An, Quảng Nam',
-            position: '15.888565750138024, 108.34642808301683',
-        },
-        {
-            id: 5,
-            address: 'Thị trấn Chợ Chùa, Quảng Ngãi',
-            position: '15.03934538342154, 108.77545294091901',
-        },
-    ]);
+    const [branches] = useState([]);
 
     const [dates, setDates] = useState([]);
 
@@ -94,40 +65,7 @@ function BookServiceContent() {
         },
     ]);
 
-    const [staffs] = useState([
-        {
-            id: 1,
-            name: 'Lê Quý Nghĩa',
-            avatar: staffNghia,
-            position: 'Salon staff',
-            phone: '0969140342',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            id: 2,
-            name: 'Ngô Anh Lượng',
-            avatar: staffLuong,
-            position: 'Salon staff',
-            phone: '0123456789',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            id: 3,
-            name: 'Hoàng Hồng Phúc',
-            avatar: staffdube,
-            position: 'Salon staff',
-            phone: '0123456789',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-        {
-            id: 4,
-            name: 'Nguyễn Hữu Phước',
-            avatar: staffdube,
-            position: 'Salon staff',
-            phone: '0123456789',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-        },
-    ]);
+    const [staffs] = useState([]);
 
     const [active, setActive] = useState(false);
     // const [center, setCenter] = useState(null);
@@ -172,7 +110,7 @@ function BookServiceContent() {
         }
     };
 
-    const position = [15.977456962147246, 108.2627979201717];
+    const position = [16.46337, 107.57739];
     let defaultIcon = L.icon({
         iconUrl: icon,
         shadowUrl: iconShadow,
@@ -223,7 +161,7 @@ function BookServiceContent() {
                                 {branches.map((branch) => (
                                     <option
                                         key={branch.id} value={branch.id}
-                                        // onClick={() => handleBranchesClick(branch.id)}
+                                    // onClick={() => handleBranchesClick(branch.id)}
                                     >
                                         {branch.address}
                                     </option>
@@ -252,9 +190,8 @@ function BookServiceContent() {
                                             </button>
                                         ) : (
                                             <button
-                                                className={`date-booking-item booking-active grid-col ${
-                                                    date.id === selectedDateId ? 'selected' : ''
-                                                }`}
+                                                className={`date-booking-item booking-active grid-col ${date.id === selectedDateId ? 'selected' : ''
+                                                    }`}
                                                 key={date.id}
                                                 onClick={() => handleDateClick(date.id)}
                                             >
@@ -297,9 +234,8 @@ function BookServiceContent() {
                                             </button>
                                         ) : (
                                             <button
-                                                className={`time-booking-item booking-active grid-col ${
-                                                    data.id === selectedTimeId ? 'selected' : ''
-                                                }`}
+                                                className={`time-booking-item booking-active grid-col ${data.id === selectedTimeId ? 'selected' : ''
+                                                    }`}
                                                 key={data.id}
                                                 onClick={() => handleTimesClick(data.id)}
                                             >
@@ -334,9 +270,9 @@ function BookServiceContent() {
                         </div>
                         <MapContainer
                             center={position}
-                            zoom={15}
-                            scrollWheelZoom={false}
-                            style={{ height: '254px', width: '100%'}}
+                            zoom={13}
+                            scrollWheelZoom={true}
+                            style={{ height: '254px', width: '100%' }}
                         >
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

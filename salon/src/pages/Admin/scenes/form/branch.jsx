@@ -107,9 +107,9 @@ const Form = () => {
                             </Box>
                             <div style={{ marginTop: '1rem', width: '100%' }}>
                                 <MapContainer
-                                    center={[15.979122033083634, 108.25241088867189]}
+                                    center={[16.46337, 107.57739]}
                                     style={{ height: 500 }}
-                                    zoom={14}
+                                    zoom={13}
                                 >
                                     <TileLayer
                                         attribution="Salon"

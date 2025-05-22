@@ -69,12 +69,12 @@ function Footer() {
                         Mail: <a href="mailto:salonspaceteam@gmail.com">salonspaceteam@gmail.com</a>
                         <br></br>
                         <PhoneIcon className="contact-icon" />
-                        Phone: <a href="tel:0702738238">0702738238</a>
+                        Phone: <a href="tel:0948683490">948683490</a>
                     </div>
                 </div>
             </footer>
             <div className={cx('footer-bottom')}>
-                <div className={cx('footer-bottom-element')}>@2023 All Rights reserved</div>
+                <div className={cx('footer-bottom-element')}>@2025 All Rights reserved</div>
                 <div className={cx('footer-bottom-element')}>SalonSpaceTeam</div>
             </div>
         </>

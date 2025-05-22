@@ -51,7 +51,7 @@ const Form = () => {
                     navigate('/404');
                 }
             });
-    }, [id.id,navigate]);
+    }, [id.id, navigate]);
 
     const handleFormSubmit = (values) => {
         if (selectedPoint != null) {
@@ -143,7 +143,7 @@ const Form = () => {
                             </Box>
                             <div style={{ marginTop: '1rem', width: '100%' }}>
                                 <MapContainer
-                                    center={[15.979122033083634, 108.25241088867189]}
+                                    center={[16.46337, 107.57739]}
                                     style={{ height: 500 }}
                                     zoom={14}
                                 >
@@ -178,7 +178,7 @@ const Form = () => {
 };
 const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 const checkoutSchema = yup.object().shape({
-   phone: yup.string().matches(phoneRegExp, 'Số điện thoại không hợp lệ').required('Không được bỏ trống'),
+    phone: yup.string().matches(phoneRegExp, 'Số điện thoại không hợp lệ').required('Không được bỏ trống'),
     address: yup.string().required('Không được bỏ trống'),
 });
 // const initialValues = {

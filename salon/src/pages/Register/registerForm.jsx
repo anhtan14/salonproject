@@ -212,7 +212,7 @@ function RegisterForm() {
                     id="name"
                     name="name"
                     type="text"
-                    placeholder="VD: Hoàng Hồng Phúc"
+                    placeholder="VD: Phạm Nguyễn Anh Tấn"
                     className="form-control1"
                     value={username}
                     onChange={(e) => handleInputChange(e)}
@@ -228,7 +228,7 @@ function RegisterForm() {
                     id="email"
                     name="email"
                     type="text"
-                    placeholder="VD: phuc@gmail.com"
+                    placeholder="VD: anhtan@gmail.com"
                     className="form-control1"
                     value={email}
                     onChange={(e) => handleInputChange(e)}
@@ -244,7 +244,7 @@ function RegisterForm() {
                     id="phone"
                     name="phone"
                     type="text"
-                    placeholder="VD: 0720743823"
+                    placeholder="VD: 01122334455"
                     className="form-control1"
                     value={phone}
                     onChange={(e) => handleInputChange(e)}

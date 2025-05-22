@@ -132,7 +132,7 @@ const Branch = () => {
     return (
         <>
             <Box m="20px">
-                <Header title="Chi nhánh" subtitle="Quản lý chi nhánh" />
+                <Header title="Sự kiện" subtitle="Quản lý sự kiện" />
                 <Box display="flex" justifyContent="start" mt="20px">
                     <Button color="secondary" variant="contained" href={BASE_URL + `/download/event`}>
                         Tải báo cáo
@@ -178,7 +178,7 @@ const Branch = () => {
             <ConfirmBox
                 open={open}
                 closeDialog={() => setOpen(false)}
-                title={'Bạn có chắc muốn xóa chi nhánh!'}
+                title={'Bạn có chắc muốn xóa sự kiện!'}
                 deleteFunction={deleteUser}
             />
             <ToastContainer />
