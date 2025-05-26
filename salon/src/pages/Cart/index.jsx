@@ -21,7 +21,7 @@ function Cart() {
     const navigate = useNavigate();
     const [jsonData, setJsonData] = useState([]);
     const [staffs, setStaffs] = useState([]);
-    const [event ,setEvent] =useState({})
+    const [event, setEvent] = useState({})
     const [times, setTimes] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalPriceBegin, setTotalPriceBegin] = useState(0);
@@ -45,7 +45,7 @@ function Cart() {
         setJsonData(updatedElements);
     };
 
-    
+
 
     useEffect(() => {
         if (user) {
@@ -61,9 +61,9 @@ function Cart() {
                 })
                 .catch((error) => console.log(error));
 
-                
-       
-        
+
+
+
 
         } else {
             navigate('/login');
@@ -112,7 +112,7 @@ function Cart() {
             const promises = [0, 1, 2, 3, 4, 5, 6].map((daysToAdd) => handleClick(daysToAdd));
             const updatedDates = await Promise.all(promises).then((results) =>
                 results.map((date, index) => ({ id: index + 1, date })),
-                
+
             );
             setDates(updatedDates);
             console.log(updatedDates[0].date)
@@ -138,17 +138,18 @@ function Cart() {
             setActive(false);
         }
         axios.post('/booking/event')
-        .then((res)=>{
-            if(res.data=='not'){
-                setEvent(null)            }
-            else{
-                setEvent(res.data)
-            }
-            
-            console.log(res.data)
-            
-        
-        })
+            .then((res) => {
+                if (res.data == 'not') {
+                    setEvent(null)
+                }
+                else {
+                    setEvent(res.data)
+                }
+
+                console.log(res.data)
+
+
+            })
     };
 
     const handleBranchesChange = (event) => {
@@ -165,12 +166,12 @@ function Cart() {
             })
             .catch((error) => console.log(error));
 
-            
+
     };
     const handleDateClick = (id) => {
         setSelectedDateId(id);
-        
-       const date1 = dates[id-1].date
+
+        const date1 = dates[id - 1].date
         axios
             .post(`/booking/listTime`, {
                 staffId: selectedStaff.id,
@@ -182,25 +183,25 @@ function Cart() {
             })
             .catch((error) => console.log(error));
 
-            axios
+        axios
             .post(`/booking/discount?date=${date1}`)
             .then((res) => {
-                if(res.data!='not'){
-                const discount = res.data;
-                setTotalPrice(totalPriceBegin)
-                
-                if(discount !==0){
-                    setTotalPrice(totalPrice-(totalPrice/100*discount))
-                    console.log(discount)
-                    setDiscount(discount)
-                }else  setDiscount(0)
-            }
+                if (res.data != 'not') {
+                    const discount = res.data;
+                    setTotalPrice(totalPriceBegin)
+
+                    if (discount !== 0) {
+                        setTotalPrice(totalPrice - (totalPrice / 100 * discount))
+                        console.log(discount)
+                        setDiscount(discount)
+                    } else setDiscount(0)
+                }
             })
             .catch((error) => console.log(error));
     };
-   
 
-    
+
+
     const handleTimesClick = (id) => {
         setSelectedTimeId(id);
     };
@@ -241,18 +242,19 @@ function Cart() {
                             bankCode: 'NCB',
                         })
                         .then((res) => {
-                           if(res.data==='ss'){ 
-                            dispatch(removeToCart());
-                            toast.success('Bạn đã đặt lịch thành công', {
-                                position: toast.POSITION.TOP_RIGHT,
-                                
-                            });
-                            navigate('/')}
+                            if (res.data === 'ss') {
+                                dispatch(removeToCart());
+                                toast.success('Bạn đã đặt lịch thành công', {
+                                    position: toast.POSITION.TOP_RIGHT,
+
+                                });
+                                navigate('/')
+                            }
                             else {
-                                
+
                                 toast.error('bạn còn đơn hàng chưa được xác nhận', {
                                     position: toast.POSITION.TOP_RIGHT,
-                                    
+
                                 });
                             }
                         });
@@ -266,7 +268,7 @@ function Cart() {
     };
 
     const [isChecked, setIsChecked] = useState(false);
-   
+
     const position = [15.977456962147246, 108.2627979201717];
     let defaultIcon = L.icon({
         iconUrl: icon,
@@ -320,7 +322,7 @@ function Cart() {
                                         <option
                                             key={branch.id}
                                             value={branch.id}
-                                            // onClick={() => handleBranchesClick(branch.id)}
+                                        // onClick={() => handleBranchesClick(branch.id)}
                                         >
                                             {branch.address}
                                         </option>
@@ -357,9 +359,9 @@ function Cart() {
                                         ),
                                     )}
                                 </div>
-                                {event !=null ?(
+                                {event != null ? (
                                     <p className={cx('event')}>{event.date} giảm giá {event.discount}%</p>
-                                ):("")}
+                                ) : ("")}
                                 <p className={cx('branch-title')}>Chọn giờ (*):</p>
                                 <div className={cx('status-time')}>
                                     <div>
@@ -409,12 +411,12 @@ function Cart() {
                             <div className={cx('total-price')}>
                                 <p className={cx('total-price-title')}>Tổng tiền:</p>{' '}
                                 <span>{totalPrice.toLocaleString('en-US')}</span> VNĐ
-                                {discount!==0 ? (
+                                {discount !== 0 ? (
                                     <p className={cx('event')}>giảm giá {discount}%</p>
-                                ):(<></>)}
+                                ) : (<></>)}
                             </div>
-                            
-                            <button  className={cx('submit-booking')} type="submit" onClick={handleSubmit}>
+
+                            <button className={cx('submit-booking')} type="submit" onClick={handleSubmit}>
                                 ĐẶT LỊCH
                             </button>
                             <ToastContainer />
@@ -423,12 +425,12 @@ function Cart() {
                             <div className={cx('booking-staffs-information')}>
                                 <h3>THÔNG TIN NHÂN VIÊN BẠN ĐÃ CHỌN</h3>
                                 {selectedStaff && (
-                                    <div>{selectedStaff.img!=null ?
-                                           ( <img  className={cx('staff-img')} src={selectedStaff.img}  />
-                                           ):(
-                                            <img  className={cx('staff-img')} src={avatarDefault} />
-                                           ) 
-                                        }
+                                    <div>{selectedStaff.img != null ?
+                                        (<img className={cx('staff-img')} src={selectedStaff.img} />
+                                        ) : (
+                                            <img className={cx('staff-img')} src={avatarDefault} />
+                                        )
+                                    }
                                         <div>
                                             <p>
                                                 <strong>{selectedStaff.name}</strong>

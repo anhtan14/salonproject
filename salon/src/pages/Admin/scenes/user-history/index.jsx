@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Box ,Button} from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { DataGrid, viVN } from '@mui/x-data-grid';
 import Header from '../../components/Header';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import axios from '~/utils/api/axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import './user-history.scss';
+import { log } from 'react-modal/lib/helpers/ariaAppHider';
 
 const HistoryBooking = () => {
     const [teamData, setTeamData] = useState([]);
@@ -27,15 +29,43 @@ const HistoryBooking = () => {
         }
     }, [user]);
 
-   const payment = (row) =>
-   {
+    const payment = (row) => {
         axios.post(`/checkout/re-create-payment?bookingid=${row}`
-        ).then((res)=>{
+        ).then((res) => {
             window.location.href = res.data.url;
         })
-   }
+    }
 
-//danhgias
+    const cancel = (row) => {
+        axios.post(`/booking/cancel?bookingid=${row}`)
+            .then((res) => {
+                if (res.data === 'ok') {
+                    Swal.fire({
+                        html: `<h4>Hủy đặt lịch thành công!</h4>`,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1100,
+                    });
+                    // Refresh the booking history\
+                    axios
+                        .get(`/bookings/history/${user.phone}`)
+                        .then((res) => {
+                            const bookingHistory = res.data;
+                            setTeamData(bookingHistory);
+                        })
+                        .catch((error) => console.log('Error fetching data:', error));
+                } else {
+                    // Show error message
+                    console.error('Hủy không thành công');
+                }
+            })
+            .catch((error) => {
+                // Handle error
+                console.error('Error hủy:', error);
+            });
+    }
+
+    //danhgias
     const columns = [
         { field: 'id', headerName: 'ID', flex: 0.5 },
         {
@@ -66,10 +96,10 @@ const HistoryBooking = () => {
                         {row.status === 0
                             ? 'Đang chờ'
                             : row.status === 1
-                            ? 'Đã hoàn thành'
-                            : row.status === 2
-                            ? 'Đã chấp nhận'
-                            : 'Hủy'}
+                                ? 'Đã hoàn thành'
+                                : row.status === 2
+                                    ? 'Đã chấp nhận'
+                                    : 'Hủy'}
                     </span>
                 );
             },
@@ -77,7 +107,7 @@ const HistoryBooking = () => {
         {
             field: 'payment',
             headerName: 'Trạng thái thanh toán',
-            flex: 2,
+            flex: 2.5,
             type: 'text',
             headerAlign: 'left',
             align: 'left',
@@ -114,7 +144,7 @@ const HistoryBooking = () => {
             headerAlign: 'left',
             align: 'left',
         },
-       
+
         // {
         //     field: 'user', // Use a new field name
         //     headerName: 'Số điện thoại người dùng',
@@ -143,21 +173,29 @@ const HistoryBooking = () => {
         },
         {
             field: 'thanhtoan',
-            headerName: 'thanh toán đơn hàng',
-            flex: 2,
+            headerName: 'Thanh toán đơn hàng',
+            flex: 2.5,
             type: 'text',
             headerAlign: 'left',
             align: 'left',
             renderCell: ({ row }) => {
-                return  (row.payment === 0 && row.status!=1 && row.status!=3) ? (
+                return (row.payment === 0 && row.status != 1 && row.status != 3) ? (
                     <Box>
                         <Button
                             color="secondary"
                             variant="contained"
                             sx={{ fontFamily: 'Lora, serif' }}
-                            onClick={() => payment(row.id)} 
+                            onClick={() => payment(row.id)}
                         >
                             Thanh toán
+                        </Button>
+                        <Button
+                            color="error"
+                            variant="contained"
+                            sx={{ fontFamily: 'Lora, serif' }}
+                            onClick={() => cancel(row.id)}
+                        >
+                            Hủy
                         </Button>
                     </Box>
                 ) : null;
@@ -168,13 +206,15 @@ const HistoryBooking = () => {
     return (
         <>
             <div className="container">
-                <Box m="20px">
+                <Box m="10px">
                     <Header title="Lịch sử giao dịch" />
                     <span className="history-subtitle">Quản lý lịch sử giao dịch</span>
                     <Box
                         m="40px 0 0 0"
                         height="100vh"
+                        width="100%"
                         sx={{
+                            minWidth: 1200,
                             '& .MuiDataGrid-root': {
                                 border: '1px solid #ccc',
                                 fontSize: '14px',
