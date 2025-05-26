@@ -213,8 +213,16 @@ public class BookingApi {
                 discount = 0;
             }
         }
-return ResponseEntity.ok().body(discount);
+        return ResponseEntity.ok().body(discount);
     }
-
+    @PostMapping("/cancel")
+    public ResponseEntity<?> cancelBooking(@RequestParam int bookingid) {
+        Booking booking = bookingRepository.findById(bookingid).orElse(null);
+        if (booking == null) {
+            return ResponseEntity.badRequest().body("Booking not found");
+        }
+        booking.setStatus(3); // 3 = canceled
+        bookingRepository.save(booking);
+        return ResponseEntity.ok("ok");
+    }
 }
-
