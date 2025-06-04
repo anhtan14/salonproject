@@ -222,7 +222,22 @@ public class BookingApi {
             return ResponseEntity.badRequest().body("Booking not found");
         }
         booking.setStatus(3); // 3 = canceled
+        booking.setPayment(0); // Reset payment status
+        booking.setDiscount(0); // Reset discount
+        booking.setTotalPrice(0); // Reset total price
+        booking.setNhanvien(null); // Clear staff association
+//        booking.setTimes(null); // Clear time association
+//        booking.setBranch(null); // Clear branch association
+//        booking.setUser(null); // Clear user association
+        // Save the updated booking
         bookingRepository.save(booking);
+
+        // Cancel all associated booking details
+        List<BookingDetail> details = bookingDetailRepository.findByBookingId(bookingid);
+        for (BookingDetail detail : details) {
+            detail.setStatus(3); // Cancel each service booking
+            bookingDetailRepository.save(detail);
+        }
         return ResponseEntity.ok("ok");
     }
 }

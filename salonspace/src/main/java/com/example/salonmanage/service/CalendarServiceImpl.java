@@ -29,7 +29,7 @@ public class CalendarServiceImpl implements CalendarService {
         List<CalendarDTO> calendarDTOList = new ArrayList<>();
         for (Booking b : bookings
         ) {
-            if (b.getTimes() != null) {
+            if (b.getTimes() != null && b.getStatus() != 3) {
                 calendarDTOList.add(convertToDTO(b));
             }
         }

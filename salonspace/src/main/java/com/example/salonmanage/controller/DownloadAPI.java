@@ -36,7 +36,7 @@ public class DownloadAPI {
     public void getBookingDownload(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=" + "Report_bookig.xlsx";
+        String headerValue = "attachment; filename=" + "Report_booking.xlsx";
         response.setHeader(headerKey, headerValue);
         List<BookingHistoryDTO> chartDTOList = bookingService.getAllBookings();
         BookingExcelExporter excelExporter = new BookingExcelExporter(chartDTOList);
