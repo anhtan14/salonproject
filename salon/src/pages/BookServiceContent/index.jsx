@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { ToastContainer, toast } from 'react-toastify';
 import { Breadcrumbs } from '~/pages/Breadcrumbs';
+import { useSelector } from 'react-redux';
+import api from '~/utils/api/axios';
 import moment from 'moment';
 import 'react-toastify/dist/ReactToastify.css';
 import 'leaflet/dist/leaflet.css';
@@ -12,6 +14,8 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import './BookServiceContent.css';
 
 function BookServiceContent() {
+    const user = useSelector((state) => state.auth.login?.currenUser);
+    const navigate = useNavigate();
     const [branches] = useState([]);
 
     const [dates, setDates] = useState([]);
@@ -95,14 +99,39 @@ function BookServiceContent() {
     };
     const handleTimesClick = (id) => {
         setSelectedTimeId(id);
-    };
-
-    const handleSubmit = (e) => {
+    };    const handleSubmit = async (e) => {
         e.preventDefault();
         if (selectedBranchId && selectedStaff && selectedDateId && selectedTimeId) {
-            toast.success('Bạn đã đặt lịch thành công', {
-                position: toast.POSITION.TOP_RIGHT,
-            });
+            try {
+                const bookingData = {
+                    date: dates[selectedDateId - 1].date,
+                    nhanvien: selectedStaff.id,
+                    user: user.phone,
+                    time: selectedTimeId,
+                    branch: selectedBranchId.id,
+                    totalPrice: 0, // You might want to calculate this based on services
+                    bankCode: 'NCB'
+                };
+
+                const response = await api.post('/booking/book', bookingData);
+                
+                if (response.data === 'ss') {
+                    toast.success('Bạn đã đặt lịch thành công', {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                    // Reset form or redirect user
+                    navigate('/');
+                } else {
+                    toast.error('Không thể đặt lịch. Vui lòng thử lại.', {
+                        position: toast.POSITION.TOP_RIGHT,
+                    });
+                }
+            } catch (error) {
+                console.error('Booking error:', error);
+                toast.error('Đã có lỗi xảy ra. Vui lòng thử lại sau.', {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
+            }
         } else {
             toast.error('Vui lòng chọn đầy đủ các mục !!!', {
                 position: toast.POSITION.TOP_RIGHT,

@@ -249,6 +249,10 @@ function Cart() {
 
                                 });
                                 navigate('/')
+                            } else if (res.data === 'full') {
+                                toast.error('Lịch của nhân viên bạn chọn không khả dụng, vui lòng chọn khung giờ khác', {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                });
                             }
                             else {
                                 toast.error('Bạn còn đơn hàng chưa được xác nhận', {
