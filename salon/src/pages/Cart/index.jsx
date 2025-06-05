@@ -251,10 +251,8 @@ function Cart() {
                                 navigate('/')
                             }
                             else {
-
-                                toast.error('bạn còn đơn hàng chưa được xác nhận', {
+                                toast.error('Bạn còn đơn hàng chưa được xác nhận', {
                                     position: toast.POSITION.TOP_RIGHT,
-
                                 });
                             }
                         });

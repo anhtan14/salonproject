@@ -12,7 +12,7 @@ import axios from '~/utils/api/axios';
 import ConfirmBox from '~/pages/Admin/components/ConfirmBox';
 import isAdmin from '~/utils/jwt';
 const cx = classNames.bind(styles);
-let badword = /ngu|cc|cac|fuck|c/gi;
+let badword = /ngu|cc|cac|fuck/gi;
 const Comments = ({ serviceID }) => {
     const [open, setOpen] = useState(false);
     const [deleteData, setDeleteData] = useState(null);

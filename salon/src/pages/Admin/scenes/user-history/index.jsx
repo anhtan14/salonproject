@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Box, Button } from '@mui/material';
 import { DataGrid, viVN } from '@mui/x-data-grid';
 import Header from '../../components/Header';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 import axios from '~/utils/api/axios';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -40,11 +39,13 @@ const HistoryBooking = () => {
         axios.post(`/booking/cancel?bookingid=${row}`)
             .then((res) => {
                 if (res.data === 'ok') {
-                    Swal.fire({
-                        html: `<h4>Hủy đặt lịch thành công!</h4>`,
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 1100,
+                    toast.success('Hủy đặt lịch thành công!', {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
                     });
                     // Refresh the booking history\
                     axios
