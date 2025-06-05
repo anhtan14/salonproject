@@ -71,6 +71,10 @@ public interface BookingRepository extends JpaRepository<Booking,Integer> {
             "group by c.date", nativeQuery = true)
     List<ChartDTO> getDataChartWithDateMonthBranch(String dateStart, String dateEnd, int branch);
 
+    // Add to BookingRepository.java
+    @Query("SELECT b FROM Booking b WHERE b.date = :date AND b.nhanvien = :staffId AND b.times.ID = :timeId AND b.status != 3")
+    List<Booking> findBookingByDateAndNhanvienAndTime(String date, Integer staffId, Integer timeId);
+
     @Transactional
     @Modifying()
     @Query(value = "update booking set status = 3 from booking b  where (b.status = 0 or b.status =2) and CONVERT(datetime, b.date, 103)< CAST(GETDATE() AS DATE)", nativeQuery = true)

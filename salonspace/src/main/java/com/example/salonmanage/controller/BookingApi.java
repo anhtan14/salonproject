@@ -145,36 +145,93 @@ public class BookingApi {
     }
         @PostMapping("/book")
         public ResponseEntity<?> book(@RequestBody BookDTO bookDTO){
-            System.out.println(bookDTO);
+//            System.out.println(bookDTO);
+//
+//            User user = userService.findByPhone(bookDTO.getUser());
+//            List<Booking> listb = bookingRepository.existbooking(user.getId());
+//            if(listb.size()==0) {
+//                Booking booking = new Booking();
+//                booking.setDate(bookDTO.getDate());
+//                booking.setNhanvien(bookDTO.getNhanvien());
+//                booking.setUser(user);
+//                Times times = timesRepository.getById(bookDTO.getTime());
+//                booking.setTimes(times);
+//                Branch branch = branchRepository.getById(bookDTO.getBranch());
+//                booking.setBranch(branch);
+//                booking.setTotalPrice(bookDTO.getTotalPrice());
+//                booking.setDiscount(0);
+//                booking.setStatus(0);
+//                booking.setPayment(0);
+//                System.out.println(booking);
+//                Booking booking1 = bookingRepository.save(booking);
+//                List<BookingDetail> list = bookingDetailRepository.findByBookingId(user.getId());
+//                for (BookingDetail b : list
+//                ) {
+//                    b.setBooking(booking1);
+//                    b.setStatus(1);
+//                    System.out.println(b);
+//                    bookingDetailRepository.save(b);
+//                }
+//                return ResponseEntity.ok("ss");
+//            }
+//            else return ResponseEntity.ok("fail");
+            // First check if the time slot is still available
+            List<Booking> conflictingBookings = bookingRepository.findBookingByDateAndNhanvienAndTime(
+                    bookDTO.getDate(),
+                    bookDTO.getNhanvien(),
+                    bookDTO.getTime()
+            );
+
+            if (!conflictingBookings.isEmpty()) {
+                return ResponseEntity.ok("full");
+            }
 
             User user = userService.findByPhone(bookDTO.getUser());
             List<Booking> listb = bookingRepository.existbooking(user.getId());
-            if(listb.size()==0) {
+            if (listb.size() == 0) {
+                // Continue with booking creation
                 Booking booking = new Booking();
-                booking.setDate(bookDTO.getDate());
-                booking.setNhanvien(bookDTO.getNhanvien());
-                booking.setUser(user);
-                Times times = timesRepository.getById(bookDTO.getTime());
-                booking.setTimes(times);
-                Branch branch = branchRepository.getById(bookDTO.getBranch());
-                booking.setBranch(branch);
-                booking.setTotalPrice(bookDTO.getTotalPrice());
-                booking.setDiscount(0);
-                booking.setStatus(0);
-                booking.setPayment(0);
-                System.out.println(booking);
-                Booking booking1 = bookingRepository.save(booking);
-                List<BookingDetail> list = bookingDetailRepository.findByBookingId(user.getId());
-                for (BookingDetail b : list
-                ) {
-                    b.setBooking(booking1);
-                    b.setStatus(1);
-                    System.out.println(b);
-                    bookingDetailRepository.save(b);
+                // rest of your existing booking logic
+
+                // Use synchronized block for the critical section
+                synchronized (this) {
+                    // Double-check availability
+                    conflictingBookings = bookingRepository.findBookingByDateAndNhanvienAndTime(
+                            bookDTO.getDate(),
+                            bookDTO.getNhanvien(),
+                            bookDTO.getTime()
+                    );
+
+                    if (!conflictingBookings.isEmpty()) {
+                        return ResponseEntity.ok("full");
+                    }
+
+                    booking.setDate(bookDTO.getDate());
+                    booking.setNhanvien(bookDTO.getNhanvien());
+                    booking.setUser(user);
+                    Times times = timesRepository.getById(bookDTO.getTime());
+                    booking.setTimes(times);
+                    Branch branch = branchRepository.getById(bookDTO.getBranch());
+                    booking.setBranch(branch);
+                    booking.setTotalPrice(bookDTO.getTotalPrice());
+                    booking.setDiscount(0);
+                    booking.setStatus(0);
+                    booking.setPayment(0);
+                    System.out.println(booking);
+                    Booking booking1 = bookingRepository.save(booking);
+                    List<BookingDetail> list = bookingDetailRepository.findByBookingId(user.getId());
+                    for (BookingDetail b : list
+                    ) {
+                        b.setBooking(booking1);
+                        b.setStatus(1);
+                        System.out.println(b);
+                        bookingDetailRepository.save(b);
+                    }
+
+                    // Rest of your code for updating booking details
                 }
                 return ResponseEntity.ok("ss");
-            }
-            else return ResponseEntity.ok("fail");
+            } else return ResponseEntity.ok("fail");
 
         }
 
